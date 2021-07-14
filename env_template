@@ -1,0 +1,9 @@
+export COMMIT_FORMAT="%ad : %s"
+export PYTHON3=/usr/bin/python3
+export AUTONOT_SCRIPT=main.py
+export CITF_DIR=
+export JKJAV_AUTO_DIR=
+export SMS_SID= 
+export AUTH_TOKEN=
+export SENDER_NO=
+export PHONE_NO=
