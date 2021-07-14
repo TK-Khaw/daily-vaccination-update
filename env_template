@@ -7,3 +7,5 @@ export SMS_SID=
 export AUTH_TOKEN=
 export SENDER_NO=
 export PHONE_NO=
+export DVU_ANALYSERS=
+export DVU_DISTRIBUTORS=

@@ -5,11 +5,9 @@ import sys
 import csv
 import requests
 
-SMS_URL = 'https://api.twilio.com/2010-04-01/Accounts/'
-SMS_SID = os.environ['SMS_SID']
-AUTH_TOKEN = os.environ['AUTH_TOKEN']
-SENDER_NO = os.environ['SENDER_NO']
-PHONE_NO = os.environ['PHONE_NO'] 
+# Comma-separated flag to enable and disable analysers and distributors.
+DVU_ANALYSERS=os.environ.get('DVU_ANALYSERS', '').split(',')
+DVU_DISTRIBUTORS=os.environ.get('DVU_DISTRIBUTORS', '').split(',')
 
 VAC_MY = os.environ['CITF_DIR'] + '/vaccination/vax_malaysia.csv'
 ENTRIES_NO = 100
@@ -39,30 +37,20 @@ for _,name,_ in pkgutil.walk_packages(path=[
         'analyser'
     )
     ]):
-    msg_body = msg_body + import_module('analyser.' + name).compute(my_fifo)
-    msg_body = msg_body + '\n'
-    msg_body = msg_body + '\n'
+    if '' in DVU_ANALYSERS or name in DVU_ANALYSERS:
+        msg_body = msg_body + import_module('analyser.' + name).compute(my_fifo)
+        msg_body = msg_body + '\n'
+        msg_body = msg_body + '\n'
 
 print(msg_body)
 
-request_body = {
-    "From" : SENDER_NO,
-    "To" : PHONE_NO,
-    "Body" : msg_body
-}
+for _,name,_ in pkgutil.walk_packages(path=[
+    os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        'distributor'
+    )
+    ]):
+    if '' in DVU_DISTRIBUTORS or name in DVU_DISTRIBUTORS:
+        import_module('distributor.' + name).distribute(msg_body)
 
-response = requests.post(
-    ''.join([
-        SMS_URL,
-        SMS_SID,
-        '/Messages.json'
-    ]),
-    auth = (
-        SMS_SID,
-        AUTH_TOKEN
-    ),
-    data = request_body
-)
-
-print(response.status_code)
-print(response.text)
+print('Done')
