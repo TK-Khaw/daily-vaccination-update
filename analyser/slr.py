@@ -8,7 +8,7 @@ def compute(my_fifo):
             a_now,
             b_now,
             r2_now,
-            'decreased' if b_now > b_then else 'increased',
+            'increased' if b_now > b_then else 'decreased',
             abs(math.atan((b_now - b_then)/(1 + b_now*b_then))) * 180/math.pi,
             'More' if r2_now > r2_then else 'Less',
         )
