@@ -13,7 +13,7 @@ def compute(my_fifo):
     def rolling_avg(fifo):
         avg = 0
         for item in fifo:
-            avg = avg + int(item['total_daily'])
+            avg = avg + int(item['daily'])
         return avg/7
 
     today = rolling_avg(my_fifo[-7:])

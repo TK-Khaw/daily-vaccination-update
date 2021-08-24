@@ -21,7 +21,7 @@ def compute(my_fifo):
         s_yy = 0
         
         for x in range(n):
-            y = int(fifo[x]['total_daily'])
+            y = int(fifo[x]['daily'])
             s_x = s_x + x
             s_xx = s_xx + x*x
             s_y = s_y + y

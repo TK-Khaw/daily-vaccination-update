@@ -36,7 +36,7 @@ def compute(my_fifo):
         weight_sum = 0
         for i in range(tc*5):
             weight = math.exp(-i/tc)
-            avg = avg + int(fifo[-i-1]['total_daily'])*weight
+            avg = avg + int(fifo[-i-1]['daily'])*weight
             weight_sum = weight_sum + weight
         return avg/weight_sum
     
